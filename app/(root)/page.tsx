@@ -1,10 +1,13 @@
 import BalanceBox from "@/components/BalanceBox"
 import BoxTitle from "@/components/BoxTitle"
 import RightSidebar from "@/components/RightSidebar"
+import { getLoggedInUser } from "@/lib/actions/user.action"
 
 
-const Home = () => {
-  const loggedIn = { firstName: "Rashin", lastName:"Harisi", email:"rashin@gmail.com"}
+const Home = async() => {
+  const loggedIn = await getLoggedInUser()
+  //console.log(loggedIn);
+  
   return (
     <section className="home">
       <div className="home-content">
@@ -12,7 +15,7 @@ const Home = () => {
           <BoxTitle
             type="greeting"
             title="Welcome"
-            user={loggedIn?.firstName || "Guest"}
+            user={loggedIn?.name || "Guest"}
             subtext="Access and manage your account and transactions efficiently."
           />
           <BalanceBox 
