@@ -7,9 +7,12 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 import Footer from './Footer'
+import PlaidLink from './PlaidLink'
+import { BiCategoryAlt } from "react-icons/bi";
 
 const Sidebar = ({ user }: SidebarProps) => {
     const pathName = usePathname()
+    const isActiveCategory = pathName === "/top-category" || pathName.startsWith("/top-category")
 
     return (
         <section className='sidebar'>
@@ -25,15 +28,24 @@ const Sidebar = ({ user }: SidebarProps) => {
                         <Link href={item.route} key={item.label} className={cn("sidebar-link", { "bg-bank-gradient": isActive })}>
                             <div className='relative size-6'>
                                 <Image src={item.imgURL} alt={item.label} fill
-                                    className={cn({'brightness-[3] invert-0' : isActive})} />
+                                    className={cn({ 'brightness-[3] invert-0': isActive })} />
                             </div>
-                            <p className={cn("sidebar-label",{"!text-white":isActive})}>{item.label}</p>
+                            <p className={cn("sidebar-label", { "!text-white": isActive })}>{item.label}</p>
                         </Link>
+
                     )
                 })}
-                {user?.name}
+                <Link href="/top-category" key="category" className={cn("sidebar-link-category", { "bg-bank-gradient": isActiveCategory})}>
+                    <div className='relative size-6'>
+                        <Image src='/icons/category.svg' alt="category" fill
+                            className={cn({ 'brightness-[3] invert-0': isActiveCategory })} />
+                    </div>
+                    <p className={cn("sidebar-label", { "!text-white": isActiveCategory })}>Top Categories</p>
+                </Link>
+
+                <PlaidLink user={user} />
             </nav>
-            <Footer user={user} type='desktop'/>
+            <Footer user={user} type='desktop' />
         </section>
     )
 }
